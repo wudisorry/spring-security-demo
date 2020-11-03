@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.arh.springsecuritydemo.mapper.MenuMapper">
+    <resultMap id="basicMenuResultMap" type="com.arh.springsecuritydemo.entity.Menu">
+        <id property="id" column="f_id"></id>
+        <result property="url" column="f_url"></result>
+        <result property="name" column="f_name"></result>
+    </resultMap>
+
+    <resultMap id="menuResultMap" type="com.arh.springsecuritydemo.entity.Menu" extends="basicMenuResultMap">
+        <collection property="roleList" ofType="com.arh.springsecuritydemo.entity.Role">
+            <result property="id" column="rId"></result>
+            <result property="name" column="rName"></result>
+            <result property="nameZh" column="rNameZh"></result>
+        </collection>
+    </resultMap>
+
+    <sql id="roleBasicColumn">
+        r.f_id as rId,r.f_name as rName,r.f_name_zh as rNameZh
+    </sql>
+
+    <select id="selectAllMenus" resultMap="basicMenuResultMap">
+        select * from t_menu
+    </select>
+
+    <select id="selectAllMenusWithRole" resultMap="menuResultMap">
+        select m.*,
+        <include refid="roleBasicColumn"/>
+        from t_menu m
+        left join t_menu_role mr
+        on m.f_id = mr.f_menu_id
+        left join t_role r
+        on mr.f_role_id = r.f_id
+    </select>
+</mapper>

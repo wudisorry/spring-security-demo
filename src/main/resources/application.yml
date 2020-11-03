@@ -1,0 +1,35 @@
+server:
+  servlet:
+    context-path: /demo
+  port: 8888
+
+condition:
+  security:
+    type: 3
+
+spring:
+  mvc:
+    static-path-pattern: /public/**
+  resources:
+    static-locations: classpath:/static,classpath:/public,classpath:/resources,classpath:/META-INF/resources
+
+  #开发时关闭缓存,不然没法看到实时页面
+  thymeleaf:
+    cache: false
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.31.37:3306/security_database?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123
+
+mybatis:
+  config-location: classpath:mybatis-config.xml
+#  mapper-locations: classpath:mybatis/mapper
+
+
+logging:
+  level:
+    com:
+      arh:
+        springsecuritydemo:
+          mapper: debug
