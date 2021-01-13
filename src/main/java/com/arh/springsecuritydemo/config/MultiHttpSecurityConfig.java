@@ -74,6 +74,8 @@ public class MultiHttpSecurityConfig {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
+                    //关闭csrf使得/home/**下的post请求不需要验证
+                    .csrf().disable()
                     .authorizeRequests(expressionInterceptUrlRegistry -> expressionInterceptUrlRegistry
                             .antMatchers("/home/**", "/public/**").permitAll()
                             .antMatchers("/user/**").access("hasRole('user') or hasRole('admin')")

@@ -4,6 +4,9 @@
     </head>
     <body>
        <h1 th:inline="text">Hello [[${userVo.name}]]!</h1>
+        <div>
+            <span th:inline="text">innerUser的值：[[${innerUser.name}]]</span>
+        </div>
 <div>
     <img th:src="@{/public/public_ts.jpg}">
     <img src="public/img/img_y.jpg">
